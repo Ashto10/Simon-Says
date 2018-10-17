@@ -1,0 +1,148 @@
+.gameContainer {
+    display: block;
+    margin: 10% auto;
+    width: 524px;
+    height: 524px;
+    position: relative;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.optionsContainer {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 262px;
+    height: 262px;
+    margin: -141px;
+    background: gray;
+    z-index: 1;
+    border-radius: 100%;
+    border: 10px solid #262a30;
+}
+
+.score {
+    display: table;
+    height: 50px;
+    width: 150px;
+    border: 1px solid black;
+    margin: 40px auto;
+}
+
+#stepDisplay {
+    font-size: 1.4em;
+    text-align: center;
+    display: table-cell;
+    vertical-align: middle;
+    margin: 0;
+    background: lightgray;
+    font-family: 'VT323', monospace;
+}
+
+.strict {
+    color: #444;
+    position: relative;
+    width: 100px;
+    margin: 0 auto 45px;
+}
+
+.strict p {
+    text-align: center;
+    margin: 0;
+}
+
+#strictToggle {
+    background: black;
+    display: block;
+    width: 15px;
+    height: 15px;
+    border-left: 15px solid orange;
+    position: relative;
+    margin: 5px auto 0;
+}
+
+#strictToggle.on {
+    border-left: none;
+    border-right: 15px solid orange;
+}
+
+.strict small {
+    position: absolute;
+    text-transform: uppercase;
+}
+
+.strict small:nth-of-type(1) {
+    left: 10%;
+}
+
+.strict small:nth-of-type(2) {
+    right: 10%;
+}
+
+.reset {
+    width: 100px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.reset p {
+    color: dimgray;
+    margin: 0;
+}
+
+#softReset {
+    display: block;
+    border: 1px solid black;
+    background: darkred;
+    height: 15px;
+    width: 15px;
+    margin: 0 auto;
+    border-radius: 100%;
+}
+
+.gameButton {
+    display: block;
+    width: 250px;
+    height: 250px;
+    float: left;
+    background: black;
+    cursor: pointer;
+    filter: brightness(50%) saturate(1);
+    border: 2px solid #262a30;
+}
+
+#red {
+    border-radius: 100% 0 0 0;
+    background: red;
+    border-top-width: 10px;
+    border-left-width: 10px;
+}
+
+#green {
+    border-radius: 0 100% 0 0;
+    background: green;
+    border-top-width: 10px;
+    border-right-width: 10px;
+}
+
+#blue {
+    border-radius: 0 0 0 100%;
+    background: blue;
+    clear: left;
+    border-bottom-width: 10px;
+    border-left-width: 10px;
+}
+
+#yellow {
+    border-radius: 0 0 100% 0;
+    background: yellow;
+    border-bottom-width: 10px;
+    border-right-width: 10px;
+}
+
+.lit {
+    filter: brightness(100%) saturate(100);
+}
+
+#strictToggle:active, #softReset:active {
+    background: gray;
+}

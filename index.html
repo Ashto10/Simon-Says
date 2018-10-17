@@ -1,0 +1,38 @@
+<html>
+    <head>
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans|VT323" rel="stylesheet">
+        <link href="styles.css" rel="stylesheet" type="text/css">
+    </head>
+    <body>
+        <div class="gameContainer">
+            <div class="optionsContainer">
+                <div class="score">
+                    <p id="stepDisplay"></p>
+                </div>
+                <div class="strict">
+                    <p>Strict Mode</p>
+                    <a id='strictToggle' class="on"></a>
+                    <small>Off</small><small>On</small>
+                </div>
+                <div class="reset">
+                    <p>Reset</p>
+                    <a id='softReset'></a>
+                </div>
+            </div>
+            <a class="gameButton" preload="auto" id="red" onclick="buttonPressed('red')"></a>
+            <a class="gameButton" preload="auto" id="green" onclick="buttonPressed('green')"></a>
+            <a class="gameButton" preload="auto" id="blue" onclick="buttonPressed('blue')"></a>
+            <a class="gameButton" preload="auto" id="yellow" onclick="buttonPressed('yellow')"></a>
+        </div>
+        
+        <div class="" id="audioContainer">
+            <audio src="https://s3.amazonaws.com/freecodecamp/simonSound1.mp3" autostart="false" id="redSound" ></audio>
+            <audio src="https://s3.amazonaws.com/freecodecamp/simonSound2.mp3" autostart="false" id="blueSound" ></audio>
+            <audio src="https://s3.amazonaws.com/freecodecamp/simonSound3.mp3" autostart="false" id="greenSound" ></audio>
+            <audio src="https://s3.amazonaws.com/freecodecamp/simonSound4.mp3" autostart="false" id="yellowSound" ></audio>
+        </div>
+        
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+        <script src="script.js"></script>
+    </body>
+</html>
