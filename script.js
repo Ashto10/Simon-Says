@@ -1,36 +1,51 @@
-$('document').ready(function() {
-  var canPlayerGuess = false;
-  var stepArray = []                                        
-  var currentColorIndex = 0;                                
-  var availableColors = ['red','green','blue','yellow'];    
-  var strictMode = true;                                   
-  var highScore = 0;                                     
-  var gameSpeed = 1000;                                  
+(function() {
+  'use strict';
+
+  const $ = {
+    elByID: el => document.getElementById(el),
+    query: (search, callback) => {
+      let els = Array.from(document.querySelectorAll(search));
+      els.forEach(callback);
+    }
+  };
+
+  let canPlayerGuess = false;
+  let stepArray = []                                        
+  let currentColorIndex = 0;                                
+  let availableColors = ['red','green','blue','yellow'];
+  let strictToggle = $.elByID('strictToggle');
+
+  let highScore = 0;                                     
+  let gameSpeed = 1000;                                  
 
   function blinkLight(color) {
-
-    var colorButton = "#" + color;
-    $(colorButton).addClass('lit');
+    $.elByID(color).classList.add('lit');
 
     playSound(color);
 
     setTimeout(function() {
-      $(colorButton).removeClass('lit');
+      $.elByID(color).classList.remove('lit');
       stopSound(color);
     },gameSpeed-200);
   }
 
   function playSound(color) {
-    var obj = document.getElementById(color + "Sound");
+    let obj = document.getElementById(color + "Sound");
     obj.play();
+  }
+
+  function stopSound(color) {
+    let obj = document.getElementById(color + "Sound");
+    obj.pause();
+    obj.currentTime = 0;
   }
 
   function playSequence() {
     canPlayerGuess = false;
     currentColorIndex = 0;
 
-    $.each(stepArray, function(index, value) {
-      setTimeout(function(){
+    stepArray.forEach((value, index) => {
+      setTimeout(function() {
         blinkLight(value,gameSpeed);
 
       },gameSpeed * index);
@@ -41,31 +56,6 @@ $('document').ready(function() {
       }
     });
   }
-
-  $("#strictToggle").click(function() {
-    if (strictMode) {
-      $('#strictToggle').removeClass('on');
-    } else {
-      $('#strictToggle').addClass('on');
-    }
-
-    strictMode = !strictMode;
-  });
-
-  $("#softReset").click(function() {
-    softReset(); 
-  });
-
-  $(".gameButton").click(function() {
-    if (canPlayerGuess) {
-      var color = $(this).attr('id');
-      if (color === stepArray[currentColorIndex]) {
-        correct(color);
-      } else {
-        incorrect();
-      }
-    }
-  });
 
   function correct(color) {
     blinkLight(color,500);
@@ -88,7 +78,7 @@ $('document').ready(function() {
 
   function incorrect() {
     canPlayerGuess = false;
-    if (strictMode) {
+    if (strictToggle.classList.contains('on')) {
       updateDisplay("Nope!");
       setTimeout(function(){
         softReset();
@@ -101,8 +91,8 @@ $('document').ready(function() {
 
   function increaseSteps() {
     updateDisplay();
-    var ran = Math.round(Math.random() * 3);
-    var nextStep = availableColors[ran];
+    let ran = Math.round(Math.random() * 3);
+    let nextStep = availableColors[ran];
     stepArray.push(nextStep);
     playSequence();
 
@@ -113,10 +103,11 @@ $('document').ready(function() {
   }
 
   function updateDisplay(text) {
+    let display = $.elByID('stepDisplay');
     if (text) {
-      $('#stepDisplay').text(text);
+      display.innerHTML = text;
     } else {
-      $('#stepDisplay').text(stepArray.length.toString());
+      display.innerHTML = stepArray.length.toString();
     }
   }
 
@@ -125,6 +116,31 @@ $('document').ready(function() {
     increaseSteps();
   }
 
-  initializeGame();
+  document.addEventListener('DOMContentLoaded', () => {
+    strictToggle.addEventListener('click', () => {
+      strictToggle.classList.toggle('on');
+    });
 
-});
+    $.elByID('softReset').addEventListener('click', () => {
+      softReset(); 
+    });
+
+    $.query('.gameButton', el => {
+      el.addEventListener('click', e => {
+        if (e.target || e.target.classList.contains('gameButton')) {
+          if (canPlayerGuess) {
+            let color = e.target.getAttribute('id');
+            if (color === stepArray[currentColorIndex]) {
+              correct(color);
+            } else {
+              incorrect();
+            }
+          }
+        }
+      });
+    });
+
+    initializeGame();
+
+  });
+}());
