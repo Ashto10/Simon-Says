@@ -7,3 +7,4 @@ Simple Simon Says game, quickly thrown together with jQuery, created as part of 
 ### Dependencies
 *Hard dependencies*
 1. JQuery
+2. SASS compiler
