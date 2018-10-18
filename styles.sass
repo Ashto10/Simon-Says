@@ -1,8 +1,8 @@
 .gameContainer 
-  display: block
+  box-sizing: border-box
   margin: 10% auto
-  width: 524px
-  height: 524px
+  width: 500px
+  height: 500px
   position: relative
   font-family: 'Open Sans', sans-serif
 
@@ -10,11 +10,12 @@
   position: absolute
   top: 50%
   left: 50%
-  width: 262px
-  height: 262px
-  margin: -141px
+  width: 60%
+  height: 60%
+  transform: translate(-50%, -50%)
   background: gray
   z-index: 1
+  box-sizing: border-box
   border-radius: 100%
   border: 10px solid #262a30
 
@@ -83,44 +84,36 @@
   width: 15px
   margin: 0 auto
   border-radius: 100%
+  
+#simon-controls
+  width: 100%
+  height: 100%
+  border-radius: 100%
+  overflow: hidden
+  border: 10px solid #262a30
+  box-sizing: border-box
 
-.gameButton 
-  display: block
-  width: 250px
-  height: 250px
+=gameButton($color)
+  width: 50%
+  height: 50%
   float: left
-  background: black
+  background: darken($color,18)
   cursor: pointer
-  filter: brightness(50%) saturate(1)
-  border: 2px solid #262a30
+  border: none
+  &.lit
+    background: $color
 
 #red 
-  border-radius: 100% 0 0 0
-  background: red
-  border-top-width: 10px
-  border-left-width: 10px
+  +gameButton(red)
 
 #green 
-  border-radius: 0 100% 0 0
-  background: green
-  border-top-width: 10px
-  border-right-width: 10px
-
+  +gameButton(green)
+    
 #blue 
-  border-radius: 0 0 0 100%
-  background: blue
-  clear: left
-  border-bottom-width: 10px
-  border-left-width: 10px
+  +gameButton(blue)
 
 #yellow 
-  border-radius: 0 0 100% 0
-  background: yellow
-  border-bottom-width: 10px
-  border-right-width: 10px
-
-.lit 
-  filter: brightness(100%) saturate(100)
+  +gameButton(yellow)
 
 #strictToggle:active, #softReset:active 
   background: gray

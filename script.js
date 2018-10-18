@@ -12,7 +12,7 @@
   let canPlayerGuess = false;
   let stepArray = []                                        
   let currentColorIndex = 0;                                
-  let availableColors = ['red','green','blue','yellow'];
+  let availableColors = [];
   let strictToggle = $.elByID('strictToggle');
 
   let highScore = 0;                                     
@@ -30,12 +30,13 @@
   }
 
   function playSound(color) {
-    let obj = document.getElementById(color + "Sound");
+    stopSound(color);
+    let obj = document.getElementById(color).children[0];
     obj.play();
   }
 
   function stopSound(color) {
-    let obj = document.getElementById(color + "Sound");
+    let obj = document.getElementById(color).children[0];
     obj.pause();
     obj.currentTime = 0;
   }
@@ -117,6 +118,10 @@
   }
 
   document.addEventListener('DOMContentLoaded', () => {
+    $.query('#simon-controls .gameButton', el => {
+      availableColors.push(el.getAttribute('id'));
+    })
+
     strictToggle.addEventListener('click', () => {
       strictToggle.classList.toggle('on');
     });
