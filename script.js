@@ -9,16 +9,15 @@
     }
   };
 
-  let canPlayerGuess = false;
-  let stepArray = []                                        
-  let currentColorIndex = 0;                                
-  let availableColors = [];
-  let strictToggle = $.elByID('strictToggle');
-
-  let highScore = 0;                                     
-  let gameSpeed = 1000;                                  
+  let canPlayerGuess = false,
+      stepArray = [],                        
+      currentColorIndex = 0,                                
+      availableColors = [],
+      strictToggle = $.elByID('strictToggle'),
+      gameSpeed = 1000;                                  
 
   function blinkLight(color) {
+    if (color === undefined) { return; }
     $.elByID(color).classList.add('lit');
 
     playSound(color);
@@ -41,21 +40,18 @@
     obj.currentTime = 0;
   }
 
-  function playSequence() {
+  function playSequence(count = 0) {
     canPlayerGuess = false;
     currentColorIndex = 0;
 
-    stepArray.forEach((value, index) => {
+    if (count >= stepArray.length) {
+      canPlayerGuess = true;
+    } else {
       setTimeout(function() {
-        blinkLight(value,gameSpeed);
-
-      },gameSpeed * index);
-      if (index === stepArray.length -1) {
-        setTimeout(function(){
-          canPlayerGuess = true;
-        },gameSpeed * stepArray.length);
-      }
-    });
+        blinkLight(stepArray[count],gameSpeed);
+        playSequence(count + 1);
+      }, gameSpeed);
+    }
   }
 
   function correct(color) {
@@ -114,13 +110,17 @@
 
   function softReset() {
     stepArray = [];
+    availableColors.forEach(color => {
+      stopSound(color);
+      $.elByID(color).classList.remove('lit');
+    });
     increaseSteps();
   }
 
   document.addEventListener('DOMContentLoaded', () => {
     $.query('#simon-controls .gameButton', el => {
       availableColors.push(el.getAttribute('id'));
-    })
+    });
 
     strictToggle.addEventListener('click', () => {
       strictToggle.classList.toggle('on');
