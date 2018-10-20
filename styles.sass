@@ -1,12 +1,27 @@
-.gameContainer 
+$boardBlack: #0e0e0f
+
+body
+  background: whitesmoke
+  background-image: radial-gradient(#BBB 3px, transparent 6px, transparent 9px, #BBB 9px, transparent 12px)
+  background-size: 40px 40px
+  height: 97vh
+
+.gameContainer
+  position: absolute
+  top: 50%
+  left: 50%
+  transform: translate(-50%, -50%)
   box-sizing: border-box
-  margin: 10% auto
-  width: 500px
-  height: 500px
+  width: 70vmin
+  height: 70vmin
+  min-width: 500px
+  min-height: 500px
   position: relative
   font-family: 'Open Sans', sans-serif
+  background: $boardBlack
+  border-radius: 100%
 
-.optionsContainer 
+.optionsContainer
   position: absolute
   top: 50%
   left: 50%
@@ -17,7 +32,7 @@
   z-index: 1
   box-sizing: border-box
   border-radius: 100%
-  border: 10px solid #262a30
+  border: 10px solid $boardBlack
 
 .score 
   display: table
@@ -45,7 +60,7 @@
     margin: 0
 
 #strictToggle 
-  background: black
+  background: $boardBlack
   display: block
   width: 15px
   height: 15px
@@ -78,42 +93,59 @@
 
 #softReset 
   display: block
-  border: 1px solid black
+  border: 1px solid $boardBlack
   background: darkred
   height: 15px
   width: 15px
   margin: 0 auto
   border-radius: 100%
+  &:active
+    background: maroon
   
 #simon-controls
   width: 100%
   height: 100%
-  border-radius: 100%
-  overflow: hidden
-  border: 10px solid #262a30
-  box-sizing: border-box
+  display: flex
+  flex-wrap: wrap
+  justify-content: center
+  align-content: center
 
-=gameButton($color)
-  width: 50%
-  height: 50%
+=gameButton($color, $s1, $s2, $s3, $s4)
+  $unlit: hsl(hue($color), saturation($color) * 0.8, lightness($color) * 0.5)
+  width: 43%
+  height: 43%
+  margin: 2%
   float: left
-  background: darken($color,18)
+  background: $unlit
   cursor: pointer
-  border: none
+  border-width: 7px*$s1 7px*$s2 7px*$s3 7px*$s4
+  border-style: solid
+  border-color: lighten($unlit, 10)
+  border-radius: 10px
+  &:active
+    border-width: 7px*$s3 7px*$s4 7px*$s1 7px*$s2
+    border-color: rgba(0,0,0,0.4)
+  &.waiting
+    background: radial-gradient(farthest-corner, darken($color, 5) 2%, darken($color, 10) 20%, $unlit)
+  &:focus
+    outline: 1px solid $color
+    outline-offset: 10px
   &.lit
-    background: $color
+    background: radial-gradient(farthest-corner, lighten($color, 18) 4%, $color 20%, $unlit)
+    border-color: $color
 
 #red 
-  +gameButton(red)
-
-#green 
-  +gameButton(green)
+  +gameButton(red, 1, 0, 0, 1)
+  border-top-left-radius: 100%
     
-#blue 
-  +gameButton(blue)
+#green 
+  +gameButton(green, 1, 1, 0, 0)
+  border-top-right-radius: 100%
 
 #yellow 
-  +gameButton(yellow)
-
-#strictToggle:active, #softReset:active 
-  background: gray
+  +gameButton(yellow, 0, 1, 1, 0)
+  border-bottom-right-radius: 100%
+  
+#blue 
+  +gameButton(blue, 0, 0, 1, 1)
+  border-bottom-left-radius: 100%

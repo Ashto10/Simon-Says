@@ -43,8 +43,17 @@
   function playSequence(count = 0) {
     canPlayerGuess = false;
     currentColorIndex = 0;
+    $.query('.gameButton', el => {
+      el.classList.remove('waiting');
+    });
 
     if (count >= stepArray.length) {
+      setTimeout(() => {
+        canPlayerGuess = true;
+        $.query('.gameButton', el => {
+          el.classList.add('waiting');
+        });
+      }, gameSpeed)
       canPlayerGuess = true;
     } else {
       setTimeout(function() {
@@ -75,6 +84,9 @@
 
   function incorrect() {
     canPlayerGuess = false;
+    $.query('.gameButton', el => {
+      el.classList.remove('waiting');
+    });
     if (strictToggle.classList.contains('on')) {
       updateDisplay("Nope!");
       setTimeout(function(){
