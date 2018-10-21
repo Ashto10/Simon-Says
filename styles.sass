@@ -1,12 +1,13 @@
-$boardBlack: #0e0e0f
+$toyBackground: #0e0e0f
 
 body
   background: whitesmoke
   background-image: radial-gradient(#BBB 3px, transparent 6px, transparent 9px, #BBB 9px, transparent 12px)
   background-size: 40px 40px
-  height: 97vh
+  margin: 0
+  height: 100vh
 
-.gameContainer
+#game-container
   position: absolute
   top: 50%
   left: 50%
@@ -18,91 +19,102 @@ body
   min-height: 500px
   position: relative
   font-family: 'Open Sans', sans-serif
-  background: $boardBlack
+  background: $toyBackground
   border-radius: 100%
 
-.optionsContainer
+/* OPTIONS */
+  
+$buttonSize: 20px
+  
+#options
+  display: flex
+  flex-wrap: wrap
+  justify-content: center
+  align-content: center
+  align-items: flex-start
   position: absolute
   top: 50%
   left: 50%
   width: 60%
   height: 60%
   transform: translate(-50%, -50%)
-  background: gray
+  background: $toyBackground
   z-index: 1
-  box-sizing: border-box
   border-radius: 100%
-  border: 10px solid $boardBlack
+  
+#title
+  font-family: 'Righteous', sans-serif
+  text-align: center
+  font-size: 2em
+  color: white
+  margin: 0
 
-.score 
+#display-container
   display: table
   height: 50px
-  width: 150px
+  width: 50%
+  max-width: 300px
+  margin: 1em 25% 1.25em
   border: 1px solid black
-  margin: 40px auto
 
-#stepDisplay 
-  font-size: 1.4em
+#display 
+  font-size: 1em
   text-align: center
   display: table-cell
+  display: table-cell
   vertical-align: middle
+  width: 100%
   margin: 0
   background: lightgray
-  font-family: 'VT323', monospace
+  font-family: 'Press Start 2P', monospace
 
-.strict 
-  color: #444
-  position: relative
-  width: 100px
-  margin: 0 auto 45px
-  p 
-    text-align: center
+.option-block
+  width: 30%
+  max-width: 100px
+  margin: 0 2.5%
+  text-align: center
+  color: #888
+  p
     margin: 0
-
-#strictToggle 
-  background: $boardBlack
-  display: block
-  width: 15px
-  height: 15px
-  border-left: 15px solid orange
+    
+#strict-mode
   position: relative
-  margin: 5px auto 0
-
-  &.on 
-    border-left: none
-    border-right: 15px solid orange
-
-.strict 
-  small 
+  small
+    color: #444
     position: absolute
     text-transform: uppercase
-
   small:nth-of-type(1) 
-    left: 10%
-
+    left: 0
   small:nth-of-type(2) 
-    right: 10%
+    right: 0
 
-.reset 
-  width: 100px
-  margin: 0 auto
-  text-align: center
-  p 
-    color: dimgray
-    margin: 0
-
-#softReset 
+#strict-toggle
   display: block
-  border: 1px solid $boardBlack
-  background: darkred
-  height: 15px
-  width: 15px
-  margin: 0 auto
+  background: orange
+  width: $buttonSize
+  height: $buttonSize
+  margin: $buttonSize/3 auto 5px
+  border-right: $buttonSize solid #222
+  &.on
+    border-left: $buttonSize solid #222
+    border-right: none
+  
+#reset-button
+  display: inline-block
+  background: red
+  width: $buttonSize * 1.2
+  height: $buttonSize * 1.2
+  margin-top: $buttonSize/3
   border-radius: 100%
+  box-sizing: border-box
+  border: 2px solid maroon
   &:active
     background: maroon
+    border-color: lighten(maroon, 5)
   
-#simon-controls
+/* GAME BUTTONS */
+  
+#controls
   width: 100%
   height: 100%
   display: flex
@@ -120,19 +132,19 @@ body
   cursor: pointer
   border-width: 7px*$s1 7px*$s2 7px*$s3 7px*$s4
   border-style: solid
-  border-color: lighten($unlit, 10)
+  border-color: darken($unlit, 10)
   border-radius: 10px
-  &:active
-    border-width: 7px*$s3 7px*$s4 7px*$s1 7px*$s2
-    border-color: rgba(0,0,0,0.4)
   &.waiting
-    background: radial-gradient(farthest-corner, darken($color, 5) 2%, darken($color, 10) 20%, $unlit)
+    background: radial-gradient(circle at 50% 50%, darken($color, 5) 2%, darken($color, 10) 20%, $unlit)
+    border-color: $unlit
   &:focus
     outline: 1px solid $color
     outline-offset: 10px
-  &.lit
-    background: radial-gradient(farthest-corner, lighten($color, 18) 4%, $color 20%, $unlit)
+  &.lit, &.waiting:active
+    background: radial-gradient(circle at 50% 50%, lighten($color, 18) 4%, $color 20%, $unlit)
     border-color: $color
+  &:active
+    border-width: 7px*$s3 7px*$s4 7px*$s1 7px*$s2
 
 #red 
   +gameButton(red, 1, 0, 0, 1)

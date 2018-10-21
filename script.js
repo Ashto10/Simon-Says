@@ -13,7 +13,7 @@
       stepArray = [],                        
       currentColorIndex = 0,                                
       availableColors = [],
-      strictToggle = $.elByID('strictToggle'),
+      strictToggle = $.elByID('strict-toggle'),
       gameSpeed = 1000;                                  
 
   function blinkLight(color) {
@@ -43,14 +43,14 @@
   function playSequence(count = 0) {
     canPlayerGuess = false;
     currentColorIndex = 0;
-    $.query('.gameButton', el => {
+    $.query('.game-button', el => {
       el.classList.remove('waiting');
     });
 
     if (count >= stepArray.length) {
       setTimeout(() => {
         canPlayerGuess = true;
-        $.query('.gameButton', el => {
+        $.query('.game-button', el => {
           el.classList.add('waiting');
         });
       }, gameSpeed)
@@ -84,7 +84,7 @@
 
   function incorrect() {
     canPlayerGuess = false;
-    $.query('.gameButton', el => {
+    $.query('.game-button', el => {
       el.classList.remove('waiting');
     });
     if (strictToggle.classList.contains('on')) {
@@ -93,7 +93,7 @@
         softReset();
       },gameSpeed*2);
     } else {
-      updateDisplay("Watch carefully");
+      updateDisplay("Try again");
       playSequence();
     }
   }
@@ -112,7 +112,7 @@
   }
 
   function updateDisplay(text) {
-    let display = $.elByID('stepDisplay');
+    let display = $.elByID('display');
     if (text) {
       display.innerHTML = text;
     } else {
@@ -130,7 +130,7 @@
   }
 
   document.addEventListener('DOMContentLoaded', () => {
-    $.query('#simon-controls .gameButton', el => {
+    $.query('.game-button', el => {
       availableColors.push(el.getAttribute('id'));
     });
 
@@ -138,13 +138,13 @@
       strictToggle.classList.toggle('on');
     });
 
-    $.elByID('softReset').addEventListener('click', () => {
+    $.elByID('reset-button').addEventListener('click', () => {
       softReset(); 
     });
 
-    $.query('.gameButton', el => {
+    $.query('.game-button', el => {
       el.addEventListener('click', e => {
-        if (e.target || e.target.classList.contains('gameButton')) {
+        if (e.target || e.target.classList.contains('game-button')) {
           if (canPlayerGuess) {
             let color = e.target.getAttribute('id');
             if (color === stepArray[currentColorIndex]) {
